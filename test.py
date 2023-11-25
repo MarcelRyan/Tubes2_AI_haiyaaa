@@ -7,8 +7,8 @@ from sklearn.metrics import accuracy_score
 
 
 # pake algo sendiri
-df = pd.read_csv('data_train.csv')
-df2 = pd.read_csv('data_validation.csv')
+df = pd.read_csv('./data/data_train.csv')
+df2 = pd.read_csv('./data/data_validation.csv')
 
 #CLEANING
 

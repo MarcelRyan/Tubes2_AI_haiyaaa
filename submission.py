@@ -7,8 +7,8 @@ from sklearn.metrics import accuracy_score
 
 
 # pake algo sendiri
-df = pd.read_csv('data_train.csv')
-df2 = pd.read_csv('data_validation.csv')
+df = pd.read_csv('data_initial_train.csv')
+df2 = pd.read_csv('test.csv')
 
 #CLEANING
 
@@ -21,30 +21,18 @@ df[column_name] = np.where(df[column_name] < 217, 217, df[column_name])
 
 column_name = "sc_w"
 
-df[column_name] = np.where(df[column_name] < 2.5, 2.5, df[column_name])
+df[column_name] = np.where(df[column_name] < 2.82, 2.82, df[column_name])
 
 X_train = df.drop(columns=['m_dep', 'talk_time', 'clock_speed', 'n_cores', 'pc', 'blue', 'dual_sim', 'four_g', 'three_g', 'touch_screen', 'wifi'], axis=1)
 y_train = df['price_range']
 # X_train = df.drop(columns=['price_range'], axis=1)
 # y_train = df['price_range']
-X_test = df2.drop(columns=['price_range', 'm_dep', 'talk_time', 'clock_speed', 'n_cores', 'pc', 'blue', 'dual_sim', 'four_g', 'three_g', 'touch_screen', 'wifi'], axis=1)
-y_test = df2['price_range']
-
-# X_test = df2.drop(columns=['price_range'], axis=1)
-# y_test = df2['price_range']
-# knn = KNeighborsClassifier(n_neighbors=19) # 19
-# knn.fit(X_train, y_train)
-
-# y_pred = knn.predict(X_test)
-
-# accuracy = accuracy_score(y_test, y_pred)
-
-# print("Prediction: ", y_pred)
-# print("Accuracy:", accuracy)
+ids = df2['id']
+X_test = df2.drop(columns=['id', 'm_dep', 'talk_time', 'clock_speed', 'n_cores', 'pc', 'blue', 'dual_sim', 'four_g', 'three_g', 'touch_screen', 'wifi'], axis=1)
 
 print("____________________________________ bikin sendiri:")
 y_pred2 = knn_prediction(X_train, X_test, 1) 
-accuracy2 = accuracy_score(y_test, y_pred2)
-print("Prediction2: ", y_pred2)
-print("Accuracy2: ", accuracy2)
+df_submission = pd.DataFrame(data={"id": ids, "price_range": y_pred2})
+print(df_submission)
+df_submission.to_csv("submission.csv", index=False)
 

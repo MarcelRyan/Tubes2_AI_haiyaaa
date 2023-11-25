@@ -11,7 +11,7 @@ class NaiveBayesClassifier:
         X : array, list of all columns except target and its value
         y : array, list of target column value
         
-        Classify which rows belongs to certain y value
+        return : Classify which rows belongs to certain y value
         """
         
         # Make dictionary with y value as keys, and X as values
@@ -28,6 +28,13 @@ class NaiveBayesClassifier:
 
     # Function to search for mean and std for every column in X
     def statistics_info(self, X):
+
+        """
+        Calculates mean and standard deviation for each column
+        X : the data to be calculated
+
+        return : mean and standard deviation of each column
+        """
         
         for column in zip(*X):  # Unpack the data first and then search for every column std and mean
             yield {
@@ -57,7 +64,14 @@ class NaiveBayesClassifier:
 
     def gaussian_distribution(self, x, mean, std):
         
-        # Function to calculate normal distribution value
+        """
+        Calculation of predicted values ​​using the Gaussian distribution formula on one of the attributes
+        x : variable value
+        mean : the average attribute value of the variable
+        std : standard deviation of the variable attribute
+
+        return : predicted value
+        """
         
         exponent = np.exp(-((x - mean)**2 / (2 * std**2)))
         
@@ -65,6 +79,13 @@ class NaiveBayesClassifier:
 
     def predict(self, X):
         
+        """
+        Prediction calculations using all attributes
+        X : data used to make predictions
+
+        return : prediction result data for each row
+        """
+
         hypotheses = []
         
         for row in X:
@@ -93,6 +114,15 @@ class NaiveBayesClassifier:
 
     # Calculate model accuracy
     def accuracy(self, y_test, y_pred):
+
+        """
+        Calculation of suitability of predicted values ​​and validation values
+        y_test : validation data target values
+        y_pred : training data target values
+
+        return : accuracy between training predictions and validation values
+        """
+
         true = 0
         
         for y_t, y_p in zip(y_test, y_pred):
